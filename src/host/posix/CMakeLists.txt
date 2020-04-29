@@ -12,6 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-add_subdirectory(host)
-
-add_executable(ptmud-ng ${ptmud_ng_host_files} ptmud-ng.cpp ptmud-ng.h)
+set(ptmud_ng_host_files ${CMAKE_CURRENT_LIST_DIR}/main.cpp PARENT_SCOPE)

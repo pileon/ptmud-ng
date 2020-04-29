@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-add_subdirectory(host)
+if(UNIX)
+    add_subdirectory(posix)
+else()
+    message(FATAL_ERROR "Unknown system")
+endif()
 
-add_executable(ptmud-ng ${ptmud_ng_host_files} ptmud-ng.cpp ptmud-ng.h)
+set(ptmud_ng_host_files ${ptmud_ng_host_files} PARENT_SCOPE)
