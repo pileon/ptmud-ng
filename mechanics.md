@@ -93,7 +93,26 @@ There's no upper limit in the health points.
 
 ## Skills
 
+Skills are things a character can learn.
+
+Some skills needs multiple rounds of training, while others are learned once.
+
+Skills are handled as percentages. For skills that needs multiple sessions to
+train, each training session adds a certain amount to the percentage knowledge.
+For one-time training skills, the percentage will be immediately set to 100.
+
+If a character have zero in a skill, it means the character has no knowledge
+at all. But all characters can still use all skills, a zero percentage skill
+will always fail unless the character have some luck-component which modifies
+the skill check, or have some affection (through other skills, spells or
+equipment) that modifies the skill percentage.
+
 ## Spells
+
+Spells are a special-case of skills: They are skills that needs to be trained
+in multiple sessions, and can never be trained over 99%. Also, a zero-percent
+spell can't be used at all, zero percent means that the character doesn't know
+about the spell at all.
 
 ## Character creation
 
