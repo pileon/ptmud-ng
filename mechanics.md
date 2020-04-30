@@ -52,6 +52,31 @@ Attributes:
 * Intelligence
 * Strength
 
+### Constitution
+
+A characters constitution dictates how much punishment the character can take.
+How well does the character handles poisons? Melee damage?
+
+It affect the characters health and how much health the character gains while
+leveling up.
+
+### Dexterity
+
+The dexterity score tells how nimble or quick a character might be. With higher
+dexterity the character could evade more melee attacks and move longer.
+ 
+### Intelligence
+
+Intelligence is important when learning spells and skills. The higher
+intelligence the more spells and skills the character can learn, and the
+quicker the character will learn them.
+
+### Strength
+
+Strength is the brute force of a character. It's important for being able to
+cary large amount of heavy equipment, as well as for damaging foes with things
+like clubs or bare hands.
+
 ## Health, movement and "mana"
 
 Equipment can't put a characters health at or below zero, and non-offensive
