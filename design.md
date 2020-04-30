@@ -61,7 +61,44 @@ pass to the game command interpreter.
 <sub>This section describes the "classes" for the world. For the mechanics of
 the game and itw world, please see [the mechanics document](mechanics.md).</sub>
 
+The world is divided into three parts: Areas, zones and locations.
 
+An area can have one or more zones, and a zone could have zero or more
+locations.
+
+Each area will have recommended character levels.
+
+In each location there could be zero or more items or "monsters" (NPC's, non-
+playing characters). A location could have zero or more exits to other
+locations.
+
+### Classes and implementation
+
+Implementation-wise, everything in the world shares a common ancestor, and are
+part of the same inheritance hierarchy.
+
+In C++ parlance:
+* `class thing;`
+* `class area : public thing;`
+* `class zone : public thing;`
+* `class location : public thing;`
+* `class character : public thing;`
+* `class monster : public character;`
+* `class player : public character;`
+* `class wizard : public character;`
+* `class item : public thing;`
+
+All NPC's will be a type of `monster`.
+
+All items will be a type of `item`.
+
+The `monster` and `item` classes will be leaf-classes in the inheritance tree:
+Instead of using inheritance to derive e.g. a `sword` from a `weapon` from
+`item`, it's behavior-based and use multiple inheritance.
+
+For example common bags will inherit from `item` and `container`, meaning it's
+an item that can contain other items. A wizard NPC will be a `monster` and a
+`spell_caster`, meaning it's a NPC that can cast spells.
 
 ## Database
 
