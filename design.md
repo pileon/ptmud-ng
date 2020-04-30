@@ -16,6 +16,39 @@ requirements and design decisions made for PTMUD-NG:
 
 ## Networking
 
+### Networking requirements
+
+* We must be able to handle multiple simultaneously connected players
+* We should be able to handle multiple types of network communication
+  (IPv4, IPv6, local networking, perhaps even local terminal I/O)
+* We should be able to handle multiple application-level protocols
+  (e.g. HTTML, plain Telnet, common MUD-specific protocols on top of Telnet)
+* Each connected player is connected to a unique in-game character
+
+### Concepts
+
+To implement the requirements we have three main concepts:
+* Servers - The passive server-connection part where players connect to
+* Connections - The active server-connection part handling buffering etc.
+* Protocols - The application-level protocol handling for a connection
+
+### Interaction
+
+The configuration can list multiple servers (passive incomming connection
+points) where players can use their tool of choice to connect to.
+
+When the game is running, all current servers are polled for new connections,
+and all current connections are polled for input. During this polling all
+queued output for a connection will be flushed.
+
+When a connection to a server is made, it creates a connection handler and a
+protocol handler.
+
+If a connection have input then the protocol handler fetches it from from the
+connection, parses it and creates a queue of commands. The main game event loop
+will fetch one command at a time (one command per connection poll round) to
+pass to the game command interpreter.
+
 ## World
 
 ## Database
