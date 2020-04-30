@@ -107,6 +107,16 @@ will always fail unless the character have some luck-component which modifies
 the skill check, or have some affection (through other skills, spells or
 equipment) that modifies the skill percentage.
 
+Training a multi-session skill becomes harder and harder the higher percentage
+the character already knows the skill. Training from zero to 10 will be easy,
+but from 90 to 100 will be extremely hard, and if the characters intelligence
+isn't high enough can even fail. Learning skills is a logarithmic curve.
+
+Skills are commonly taught by specific NPC teachers in the game, but can also
+be trained through continuous and common usage. For the higher percentages
+of a skill, practical use is almost always the best way to increase skill
+knowledge.
+
 ## Spells
 
 Spells are a special-case of skills: They are skills that needs to be trained
