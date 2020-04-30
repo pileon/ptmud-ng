@@ -58,6 +58,11 @@ pass to the game command interpreter.
 
 ## World
 
+<sub>This section describes the "classes" for the world. For the mechanics of
+the game and itw world, please see [the mechanics document](mechanics.md).</sub>
+
+
+
 ## Database
 
 ## Utility
