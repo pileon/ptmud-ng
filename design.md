@@ -14,6 +14,13 @@ requirements and design decisions made for PTMUD-NG:
 
 ## Requirements
 
+* PTMUD-NG is *text-based*. All output will be text in one form or another,
+  and all input will be handled as line-based commands
+* As a member of the DikuMUD family, PTMUD-NG is geared toward "hack-n-slash"
+  D&D type games
+* The role-playing mechanics will be built into the game engine itself,
+  but should be relatively easy to modify and tweak
+
 ## Networking
 
 ### Networking requirements
