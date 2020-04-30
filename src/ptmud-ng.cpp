@@ -18,9 +18,35 @@
 
 namespace ptmud
 {
-    int main(int argc [[maybe_unused]], char* argv[] [[maybe_unused]])
+    namespace
+    {
+        void init(int argc [[maybe_unused]], char* argv[] [[maybe_unused]])
+        {
+            // TODO: 1. Configuration defaults
+            // TODO: 2. Read configuration file
+            // TODO: 3. Parse arguments
+            // TODO: 4. Logging setup
+            // TODO: 5. Read "database"
+            // TODO: 6. Network setup
+        }
+
+        void cleanup()
+        {
+        }
+    }
+
+    int main(int argc, char* argv[])
     {
         std::cout << "Hello world!\n";
+
+        // TODO: Initialization
+        init(argc, argv);
+
+        // TODO: Enter main loop
+
+        // TODO: Clean up
+        cleanup();
+
         return 0;
     }
 }
