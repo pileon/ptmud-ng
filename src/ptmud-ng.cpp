@@ -21,7 +21,7 @@ namespace ptmud
 {
     namespace
     {
-        void init(int argc [[maybe_unused]], char* argv[] [[maybe_unused]])
+        void init(int argc, char* argv[])
         {
             config::init(argc, argv);
 
@@ -42,9 +42,37 @@ namespace ptmud
 
         init(argc, argv);
 
+        if (config::exist("foo"))
+        {
+            std::cout << "\"foo\" exists!\n";
+        }
+        else
+        {
+            std::cout << "\"foo\" doesn't exist yet\n";
+        }
+
+        config::get<std::string>("foo") = "bar";
+
+        if (config::exist("foo"))
+        {
+            std::cout << R"("foo" exists and have the value ")" << config::get<std::string>("foo") << "\"\n";
+        }
+        else
+        {
+            std::cout << "\"foo\" doesn't exist!\n";
+        }
+
         // TODO: Enter main loop
 
         cleanup();
+
+#if defined(CLION_IDE)
+        {
+            std::cout << std::endl << "Press Enter to continue... ";
+            std::string line;
+            std::getline(std::cin, line);
+        }
+#endif
 
         return 0;
     }

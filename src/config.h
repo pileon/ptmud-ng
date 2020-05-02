@@ -19,6 +19,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <type_traits>
 
 namespace ptmud::config
 {
@@ -58,6 +59,9 @@ namespace ptmud::config
     //! All values are stored as strings.
     using configuration_map_type = std::unordered_map<std::string, std::string>;
 
+    //! \brief Get the configuration map
+    configuration_map_type& get_configuration();
+
     template <typename T>
     struct value;
 
@@ -80,9 +84,28 @@ namespace ptmud::config
             return *this;
         }
 
-        bool operator==(T const& other) const
+        base_value& operator=(std::string new_value)
+        {
+            actual_->second = std::move(new_value);
+            return *this;
+        }
+
+        template<typename..., typename U = T>
+        bool operator==(U const& other) const
         {
             return actual_->second == std::to_string(other);
+        }
+
+        template<typename..., typename U = T>
+        std::enable_if_t<!std::is_same_v<U, std::string>, bool>
+        operator==(std::string const& other) const
+        {
+            return actual_->second == other;
+        }
+
+        friend std::ostream& operator<<(std::ostream& os, base_value const& value)
+        {
+            return os << value.actual_->second;
         }
 
     protected:
@@ -103,26 +126,35 @@ namespace ptmud::config
     template <typename T>
     struct value : public base_value<T>
     {
+        using base_value<T>::base_value;
+        using base_value<T>::operator=;
+
         explicit operator T() const
         {
             return T(this->actual_->second);
         }
     };
 
-    //! \brief Specialization of the value structure
-    template <>
-    struct value<int> : public base_value<int>
-    {
-        explicit operator int() const
-        {
-            return std::stoi(actual_->second);
-        }
-    };
+    // //! \brief Specialization of the value structure
+    // template <>
+    // struct value<int> : public base_value<int>
+    // {
+    //     using base_value<int>::base_value;
+    //     using base_value<int>::operator=;
+    //
+    //     explicit operator int() const
+    //     {
+    //         return std::stoi(actual_->second);
+    //     }
+    // };
 
     //! \brief Specialization of the value structure
     template <>
     struct value<std::string> : public base_value<std::string>
     {
+        using base_value<std::string>::base_value;
+        using base_value<std::string>::operator=;
+
         explicit operator std::string() const
         {
             return actual_->second;
@@ -133,6 +165,9 @@ namespace ptmud::config
     template <>
     struct value<char const*> : public base_value<char const*>
     {
+        using base_value<const char*>::base_value;
+        using base_value<char const*>::operator=;
+
         explicit operator char const*() const
         {
             return actual_->second.c_str();
@@ -142,7 +177,19 @@ namespace ptmud::config
 
     //! \brief Get the named configuration value
     template <typename T>
-    value<T> get(std::string const& name);
+    value<T> get(std::string const& name)
+    {
+        if (auto config = get_configuration().find(name); config != get_configuration().end())
+        {
+            return value<T>(config);
+        }
+        else
+        {
+            // Insert new value into the map and return iterator to it
+            auto pair = get_configuration().emplace(name, "");
+            return value<T>(pair.first);
+        }
+    }
 
     //! \brief Check if a configuration key exists
     bool exist(std::string const& name);

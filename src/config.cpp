@@ -48,19 +48,9 @@ namespace ptmud::config
 
     }
 
-    template <typename T>
-    value<T> get(std::string const& name)
+    configuration_map_type& get_configuration()
     {
-        if (auto config = configuration.find(name); config != configuration.end())
-        {
-            return value<T>(config);
-        }
-        else
-        {
-            // Insert new value into the map and return iterator to it
-            auto pair = configuration.emplace(name, "");
-            return value<T>(pair.first);
-        }
+        return configuration;
     }
 
     bool exist(std::string const& name)
