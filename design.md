@@ -29,7 +29,7 @@ requirements and design decisions made for PTMUD-NG:
 * We should be able to handle multiple types of network communication
   (IPv4, IPv6, local networking, perhaps even local terminal I/O)
 * We should be able to handle multiple application-level protocols
-  (e.g. HTTML, plain Telnet, common MUD-specific protocols on top of Telnet)
+  (e.g. HTML, plain Telnet, common MUD-specific protocols on top of Telnet)
 * Each connected player is connected to a unique in-game character
 
 ### Concepts
