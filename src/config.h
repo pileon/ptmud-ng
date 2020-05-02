@@ -18,6 +18,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <vector>
 
 namespace ptmud::config
 {
@@ -29,6 +30,27 @@ namespace ptmud::config
 
     //endregion
 
+    //! \brief Configuration per-module setup and value registration
+    namespace registry
+    {
+        struct value
+        {
+            std::string name;
+            std::string long_option;
+            char        short_option;
+            std::string info_text;
+            std::string default_value;
+            enum
+            {
+                file_only,
+                argument_only,
+                both
+            }           scope;
+        };
+
+        void register_values(std::vector<value> const& values);
+    }
+
     //region Values
 
     //! \brief The configuration is stored as a mapping from name to value
@@ -36,11 +58,11 @@ namespace ptmud::config
     //! All values are stored as strings.
     using configuration_map_type = std::unordered_map<std::string, std::string>;
 
-    template<typename T>
+    template <typename T>
     struct value;
 
     //! \brief Represents a single configuration value
-    template<typename T>
+    template <typename T>
     class base_value
     {
     public:
@@ -72,12 +94,13 @@ namespace ptmud::config
         {
         }
 
-        template<typename U>
+        template <typename U>
         friend value<U> get(std::string const&);
 
     };
 
-    template<typename T>
+    //! \brief Default value structure
+    template <typename T>
     struct value : public base_value<T>
     {
         explicit operator T() const
@@ -86,7 +109,8 @@ namespace ptmud::config
         }
     };
 
-    template<>
+    //! \brief Specialization of the value structure
+    template <>
     struct value<int> : public base_value<int>
     {
         explicit operator int() const
@@ -95,7 +119,8 @@ namespace ptmud::config
         }
     };
 
-    template<>
+    //! \brief Specialization of the value structure
+    template <>
     struct value<std::string> : public base_value<std::string>
     {
         explicit operator std::string() const
@@ -104,7 +129,8 @@ namespace ptmud::config
         }
     };
 
-    template<>
+    //! \brief Specialization of the value structure
+    template <>
     struct value<char const*> : public base_value<char const*>
     {
         explicit operator char const*() const
@@ -115,8 +141,11 @@ namespace ptmud::config
 
 
     //! \brief Get the named configuration value
-    template<typename T>
+    template <typename T>
     value<T> get(std::string const& name);
+
+    //! \brief Check if a configuration key exists
+    bool exist(std::string const& name);
 
     //endregion
 }

@@ -20,10 +20,16 @@ namespace ptmud::config
     {
         // The actual configuration
         configuration_map_type configuration;
+
+        // Registry of configuration keys, use to set up argument and file parsing
+        // and the default values
+        std::vector<registry::value> value_registry;
     }
 
     void init(int argc [[maybe_unused]], char* argv[] [[maybe_unused]])
     {
+        // TODO: Call each sub-module to register configuration keys
+
         // TODO: Set default values for configuration
 
         // TODO: Parse arguments
@@ -54,6 +60,19 @@ namespace ptmud::config
             // Insert new value into the map and return iterator to it
             auto pair = configuration.emplace(name, "");
             return value<T>(pair.first);
+        }
+    }
+
+    bool exist(std::string const& name)
+    {
+        return configuration.find(name)  != configuration.end();
+    }
+
+    namespace registry
+    {
+        void register_values(std::vector<value> const& values)
+        {
+            value_registry.insert(end(value_registry), begin(values), end(values));
         }
     }
 }
