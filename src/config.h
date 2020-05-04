@@ -23,6 +23,8 @@
 
 namespace ptmud::config
 {
+    // TODO: Add namespace for compile-time default values, for easier customization
+
     //region Initialization and cleanup
 
     void init(int argc, char* argv[]);

@@ -14,21 +14,40 @@
 
 #include "config.h"
 
+namespace
+{
+    // This function is called to register all sub-modules options.
+    //
+    // If a new sub-module is added that requires options, then a call
+    // to that sub-module should be added.
+    //
+    // TODO: Add documentation for this function
+    void register_options()
+    {
+        // TODO: log::register_options();
+        // TODO: net::register_options();
+    }
+}
+
+// //////////////////////////////////////////////////////////////////
+// Below here no code should need to be modified
+
 namespace ptmud::config
 {
     namespace
     {
-        // The actual configuration
+        // The actual run-time configuration map
         configuration_map_type configuration;
 
-        // Registry of configuration keys, use to set up argument and file parsing
-        // and the default values
+        // Registry of configuration options, used to set up argument,
+        // configuration file parsing and the default values
         std::vector<registry::option> value_registry;
     }
 
     void init(int argc [[maybe_unused]], char* argv[] [[maybe_unused]])
     {
-        // TODO: Call each sub-module to register configuration keys
+        // Call each sub-module to register configuration keys
+        register_options();
 
         // TODO: Set default values for configuration
 
