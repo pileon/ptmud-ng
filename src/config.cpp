@@ -23,7 +23,7 @@ namespace ptmud::config
 
         // Registry of configuration keys, use to set up argument and file parsing
         // and the default values
-        std::vector<registry::value> value_registry;
+        std::vector<registry::option> value_registry;
     }
 
     void init(int argc [[maybe_unused]], char* argv[] [[maybe_unused]])
@@ -60,7 +60,7 @@ namespace ptmud::config
 
     namespace registry
     {
-        void register_values(std::vector<value> const& values)
+        void register_values(std::vector<option> const& values)
         {
             value_registry.insert(end(value_registry), begin(values), end(values));
         }

@@ -62,6 +62,16 @@ namespace ptmud
             std::cout << "\"foo\" doesn't exist!\n";
         }
 
+        using config::registry::make_argument_option;
+        std::vector<config::registry::option> options = {
+            make_argument_option("option1", "long-option-1", 's', "the first option", "default value 1"),
+            make_argument_option("option2", 'x', "the first option", "default value 2"),
+            make_argument_option("option3", "long-option-3", "the third option")
+        };
+
+
+
+
         // TODO: Enter main loop
 
         cleanup();

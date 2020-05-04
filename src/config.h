@@ -34,22 +34,59 @@ namespace ptmud::config
     //! \brief Configuration per-module setup and value registration
     namespace registry
     {
-        struct value
+        //! \brief This structure describes a configuration option
+        struct option
         {
-            std::string name;
-            std::string long_option;
-            char        short_option;
-            std::string info_text;
-            std::string default_value;
+            std::string name;                   //!< Name of the option
+            std::string long_option;            //!< Possible long option name for the command-line option
+            char        short_option;           //!< Possible one-character abbreviation of the command-line option
+            std::string info_text;              //!< Informative text displayed for help
             enum
             {
                 file_only,
                 argument_only,
                 both
-            }           scope;
+            }           scope;                  //!< Can the option be in the configuration file only, can be command-line argument only, or both
+            std::string default_value = "";     //!< Default value, if any
         };
 
-        void register_values(std::vector<value> const& values);
+        inline option make_argument_option(std::string const& name, std::string const& long_option, char const short_option, std::string const& info_text, std::string const& value = "")
+        {
+            return option{
+                .name = name,
+                .long_option = long_option,
+                .short_option = short_option,
+                .info_text = info_text,
+                .scope = option::argument_only,
+                .default_value = value
+            };
+        }
+
+        inline option make_argument_option(std::string const& name, std::string const& long_option, std::string const& info_text, std::string const& value = "")
+        {
+            return option{
+                .name = name,
+                .long_option = long_option,
+                .short_option = 0,
+                .info_text = info_text,
+                .scope = option::argument_only,
+                .default_value = value
+            };
+        }
+
+        inline option make_argument_option(std::string const& name, char const short_option, std::string const& info_text, std::string const& value = "")
+        {
+            return option{
+                .name = name,
+                .long_option = "",
+                .short_option = short_option,
+                .info_text = info_text,
+                .scope = option::argument_only,
+                .default_value = value
+            };
+        }
+
+        void register_values(std::vector<option> const& values);
     }
 
     //region Values
