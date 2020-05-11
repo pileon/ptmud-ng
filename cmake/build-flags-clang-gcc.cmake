@@ -50,6 +50,18 @@ if(HAVE_FLAG_WIMPLICIT_FALLTHROUGH)
     list(APPEND COMPILER_OPTIONS -Wimplicit-fallthrough)
 endif()
 
+# TODO: Other arguments to check for and possibly add?
+# TODO: -Warray-bounds
+# TODO: -Wformat
+# TODO: -Wno-format-zero-length
+# TODO: -Wformat-nonliteral
+# TODO: -Wformat-security
+# TODO: -Wformat-signedness
+# TODO: -Wformat-overflow=2
+# TODO: -Wformat-truncation=2
+# TODO: -Wformat-y2k
+# TODO: -fcoroutines
+
 # Check for other miscellaneous flags
 check_cxx_compiler_flag(-pipe HAVE_FLAG_PIPE)
 if(HAVE_FLAG_PIPE)

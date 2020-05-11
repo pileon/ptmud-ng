@@ -15,3 +15,4 @@
 add_subdirectory(host)
 
 add_executable(ptmud-ng ${ptmud_ng_host_files} ptmud-ng.cpp ptmud-ng.h config.cpp config.h)
+target_link_libraries(ptmud-ng Threads::Threads Boost::program_options)

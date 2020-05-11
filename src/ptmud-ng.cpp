@@ -40,6 +40,16 @@ namespace ptmud
     {
         std::cout << "Hello world!\n";
 
+        using config::registry::make_argument_option;
+        std::vector<config::registry::option> options = {
+            make_argument_option("o1.option1", "long-option-1", 's', "the first option", "default value 1"),
+            make_argument_option("o1.option2", 'x', "the first option", "default value 2"),
+            make_argument_option("o2.option3", "long-option-3", "the third option"),
+            make_argument_option("option4", "long-option-4", '4', "the fourth option")
+        };
+
+        config::registry::register_values(options);
+
         init(argc, argv);
 
         if (config::exist("foo"))
@@ -61,13 +71,6 @@ namespace ptmud
         {
             std::cout << "\"foo\" doesn't exist!\n";
         }
-
-        using config::registry::make_argument_option;
-        std::vector<config::registry::option> options = {
-            make_argument_option("option1", "long-option-1", 's', "the first option", "default value 1"),
-            make_argument_option("option2", 'x', "the first option", "default value 2"),
-            make_argument_option("option3", "long-option-3", "the third option")
-        };
 
 
 
