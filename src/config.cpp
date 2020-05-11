@@ -42,6 +42,17 @@ namespace ptmud::config
         // Registry of configuration options, used to set up argument,
         // configuration file parsing and the default values
         std::vector<registry::option> value_registry;
+
+        void set_default_values()
+        {
+            for (auto const& option : value_registry)
+            {
+                if (!option.name.empty() && !option.default_value.empty())
+                {
+                    configuration.emplace(option.name, option.default_value);
+                }
+            }
+        }
     }
 
     void init(int argc [[maybe_unused]], char* argv[] [[maybe_unused]])
@@ -49,7 +60,7 @@ namespace ptmud::config
         // Call each sub-module to register configuration keys
         register_options();
 
-        // TODO: Set default values for configuration
+        set_default_values();
 
         // TODO: Parse arguments
 
