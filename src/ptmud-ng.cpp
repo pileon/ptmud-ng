@@ -41,11 +41,14 @@ namespace ptmud
         std::cout << "Hello world!\n";
 
         using config::registry::make_argument_option;
+        using config::registry::make_argument_switch;
         std::vector<config::registry::option> options = {
             make_argument_option("o1.option1", "long-option-1", 's', "the first option", "default value 1"),
-            make_argument_option("o1.option2", 'x', "the first option", "default value 2"),
+            make_argument_option("o1.option2", 'x', "the second option", "default value 2"),
             make_argument_option("o2.option3", "long-option-3", "the third option"),
-            make_argument_option("option4", "long-option-4", '4', "the fourth option")
+            make_argument_option("option4", "long-option-4", '4', "the fourth option"),
+            make_argument_switch("o2.switch1", "long-switch-1", 'w', "switch 1"),
+            make_argument_switch("o1.switch2", "long-switch-2", "switch 2", true)
         };
 
         config::registry::register_values(options);

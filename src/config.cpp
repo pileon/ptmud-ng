@@ -63,6 +63,8 @@ namespace ptmud::config
 
         void add_option_to_descr(po::options_description& descr, registry::option const& opt)
         {
+            // TODO: Need a way to map back from the description to the option (or at least the name)
+
             std::string option;
 
             if (!opt.long_option.empty())
@@ -76,13 +78,27 @@ namespace ptmud::config
                 option += opt.short_option;
             }
 
-            if (opt.default_value.empty())
+            if (opt.is_switch)
             {
-                descr.add_options()(option.c_str(), po::value<std::string>(), opt.info_text.c_str());
+                if (opt.default_value.empty())
+                {
+                    descr.add_options()(option.c_str(), po::bool_switch(), opt.info_text.c_str());
+                }
+                else
+                {
+                    descr.add_options()(option.c_str(), po::bool_switch()->default_value(true), opt.info_text.c_str());
+                }
             }
             else
             {
-                descr.add_options()(option.c_str(), po::value<std::string>()->default_value(opt.default_value), opt.info_text.c_str());
+                if (opt.default_value.empty())
+                {
+                    descr.add_options()(option.c_str(), po::value<std::string>(), opt.info_text.c_str());
+                }
+                else
+                {
+                    descr.add_options()(option.c_str(), po::value<std::string>()->default_value(opt.default_value), opt.info_text.c_str());
+                }
             }
         }
 

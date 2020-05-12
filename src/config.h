@@ -39,10 +39,12 @@ namespace ptmud::config
         //! \brief This structure describes a configuration option
         struct option
         {
+            // TODO: Need to add a boolean toggle for true/false switches
             std::string name;                   //!< Name of the option
             std::string long_option;            //!< Possible long option name for the command-line option
             char        short_option;           //!< Possible one-character abbreviation of the command-line option
             std::string info_text;              //!< Informative text displayed for help
+            bool        is_switch;              //!< True if option is a boolean "switch" or "toggle"
             enum
             {
                 file_only,
@@ -59,6 +61,7 @@ namespace ptmud::config
                 .long_option = long_option,
                 .short_option = short_option,
                 .info_text = info_text,
+                .is_switch = false,
                 .scope = option::argument_only,
                 .default_value = value
             };
@@ -71,6 +74,7 @@ namespace ptmud::config
                 .long_option = long_option,
                 .short_option = 0,
                 .info_text = info_text,
+                .is_switch = false,
                 .scope = option::argument_only,
                 .default_value = value
             };
@@ -83,8 +87,48 @@ namespace ptmud::config
                 .long_option = "",
                 .short_option = short_option,
                 .info_text = info_text,
+                .is_switch = false,
                 .scope = option::argument_only,
                 .default_value = value
+            };
+        }
+
+        inline option make_argument_switch(std::string const& name, std::string const& long_option, char const short_option, std::string const& info_text, bool default_on = false)
+        {
+            return option{
+                .name = name,
+                .long_option = long_option,
+                .short_option = short_option,
+                .info_text = info_text,
+                .is_switch = true,
+                .scope = option::argument_only,
+                .default_value = default_on ? "true" : ""
+            };
+        }
+
+        inline option make_argument_switch(std::string const& name, std::string const& long_option, std::string const& info_text, bool default_on = false)
+        {
+            return option{
+                .name = name,
+                .long_option = long_option,
+                .short_option = 0,
+                .info_text = info_text,
+                .is_switch = true,
+                .scope = option::argument_only,
+                .default_value = default_on ? "true" : ""
+            };
+        }
+
+        inline option make_argument_switch(std::string const& name, char const short_option, std::string const& info_text, bool default_on = false)
+        {
+            return option{
+                .name = name,
+                .long_option = "",
+                .short_option = short_option,
+                .info_text = info_text,
+                .is_switch = true,
+                .scope = option::argument_only,
+                .default_value = default_on ? "true" : ""
             };
         }
 
