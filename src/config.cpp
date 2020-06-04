@@ -17,6 +17,7 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <ranges>
 #include <boost/program_options.hpp>
 
 namespace
@@ -115,14 +116,12 @@ namespace ptmud::config
             std::unordered_map<std::string, po::options_description> sectioned_options;
             po::options_description other("Other options");
 
-            // TODO: Use the new ranges to filter?
-            for (auto const& opt : value_registry)
+            namespace views = std::ranges::views;
+            for (auto const& opt : value_registry | views::filter([](auto const& opt)
+                                                                  {
+                                                                      return opt.scope != registry::option::file_only && (!opt.long_option.empty() || opt.short_option != 0);
+                                                                  }))
             {
-                if (opt.scope == registry::option::file_only || (opt.long_option.empty() && opt.short_option == 0))
-                {
-                    continue;
-                }
-
                 if (auto pos = opt.name.find('.'); pos != std::string::npos)
                 {
                     auto section = opt.name.substr(0, pos);
@@ -146,8 +145,6 @@ namespace ptmud::config
             }
             options.add(other);
 
-            std::cout << options;
-
             return options;
         }
 
@@ -155,12 +152,11 @@ namespace ptmud::config
         {
             [[maybe_unused]] auto options = create_argument_options();
 
+            po::variables_map vm;
+
             // TODO: Check for "help" and "version" arguments
 
             // TODO: Check for "config" option to get the configuration file name
-            // TODO: If none, create a default entry for it
-
-            po::variables_map vm;
 
             return vm;
         }
@@ -192,7 +188,7 @@ namespace ptmud::config
 
     bool exist(std::string const& name)
     {
-        return configuration.find(name)  != configuration.end();
+        return configuration.find(name) != configuration.end();
     }
 
     namespace registry
