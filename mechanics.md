@@ -2,7 +2,7 @@
 
 The game mechanics of a role-playing game is always controversial. Should
 it be based on an existing RPG mechanics? Which one should it then be based
-on? If not, then how similar to other systems can we kmake it without
+on? If not, then how similar to other systems can we make it without
 plagiarizing to much or risk copyright infringement?
 
 As a DikuMUD variant, should PTMUD-NG strictly follow the DikuMUD mechanics,
@@ -28,11 +28,15 @@ PTMUD-NG will have levels and experience points (XP). There will not be a
 for each level will be algorithmically calculated.
 
 Experience points is primarily earned from fighting, but also from exploration.
+For example by discovering a new area or zone will be rewarded with XP.
 
 ## Classes
 
 PTMUD-NG will be classless. Any player can pick any set of skills or spells for
 progression.
+
+For simplicity there will be a form of templates that can be chosen at character
+creation to create e.g. a warrior-like character, or a mage-like character.
 
 ## Attributes
 
@@ -63,7 +67,8 @@ leveling up.
 ### Dexterity
 
 The dexterity score tells how nimble or quick a character might be. With higher
-dexterity the character could evade more melee attacks and move longer.
+dexterity the character could evade more melee attacks and move longer or
+quicker.
  
 ### Intelligence
 
