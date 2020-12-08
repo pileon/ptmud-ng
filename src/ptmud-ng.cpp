@@ -42,7 +42,7 @@ namespace ptmud
 
         using config::registry::make_argument_option;
         using config::registry::make_argument_switch;
-        std::vector<config::registry::option> options = {
+        auto options = {
             make_argument_option("o1.option1", "long-option-1", 's', "the first option", "default value 1"),
             make_argument_option("o1.option2", 'x', "the second option", "default value 2"),
             make_argument_option("o2.option3", "long-option-3", "the third option"),
