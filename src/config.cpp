@@ -19,6 +19,7 @@
 #include <unordered_map>
 #include <ranges>
 #include <boost/program_options.hpp>
+#include <cstdlib>
 
 namespace
 {
@@ -150,11 +151,27 @@ namespace ptmud::config
 
         po::variables_map parse_arguments(int argc [[maybe_unused]], char* argv[] [[maybe_unused]])
         {
-            [[maybe_unused]] auto options = create_argument_options();
+            auto options = create_argument_options();
 
             po::variables_map vm;
 
-            // TODO: Check for "help" and "version" arguments
+            po::store(
+                po::command_line_parser(argc, argv)
+                .options(options)
+                .run(), vm);
+            po::notify(vm);
+
+            if (vm.count("help"))
+            {
+                std::cout << options;
+                std::exit(EXIT_SUCCESS);
+            }
+
+            if (vm.count("version"))
+            {
+                std::cout << "PTMUD-NG version 0.0.1\n";
+                std::exit(EXIT_SUCCESS);
+            }
 
             // TODO: Check for "config" option to get the configuration file name
 
