@@ -14,6 +14,12 @@
 
 if(UNIX)
     add_subdirectory(posix)
+elseif(WIN32)
+    if(MINGW)
+        add_subdirectory(posix)
+    else()
+        message(FATAL_ERROR "Windows is only supported with MinGW")
+    endif()
 else()
     message(FATAL_ERROR "Unknown system")
 endif()
